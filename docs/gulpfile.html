@@ -22,7 +22,6 @@
     <div class='code'>
       <div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">gulp</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;gulp&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">rename</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;gulp-rename&#39;</span><span class="p">);</span>
-<span class="kr">const</span> <span class="nx">purgecss</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;gulp-purgecss&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">concat</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;gulp-concat&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">minifyCSS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;gulp-minify-css&#39;</span><span class="p">);</span></pre></div>
     </div>
@@ -46,18 +45,6 @@
       <div class='octowrap'>
         <a class='octothorpe' href='#section-2'>#</a>
       </div>
-      <p>~/.local/bin/pycco gulpfile.js</p>
-    </div>
-    <div class='code'>
-      <div class="highlight"><pre></pre></div>
-    </div>
-  </div>
-  <div class='clearall'></div>
-  <div class='section' id='section-3'>
-    <div class='docs'>
-      <div class='octowrap'>
-        <a class='octothorpe' href='#section-3'>#</a>
-      </div>
       <p>Tailwind extractor that causes PurgeCSS to include class names
 with the special characters that Tailwind uses.</p>
     </div>
@@ -66,7 +53,24 @@ with the special characters that Tailwind uses.</p>
   <span class="kr">static</span> <span class="nx">extract</span><span class="p">(</span><span class="nx">content</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">content</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/[A-z0-9-:\/]+/g</span><span class="p">);</span>
   <span class="p">}</span>
-<span class="p">};</span></pre></div>
+<span class="p">};</span>
+
+<span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">&#39;copy&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">gulp</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-3'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-3'>#</a>
+      </div>
+      <p>Look for *.ccs files the current or any child directory. </p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>  <span class="p">.</span><span class="nx">src</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">sourceDir</span><span class="si">}</span><span class="sb">/**/*.html`</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">gulp</span><span class="p">.</span><span class="nx">dest</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">targetDir</span><span class="si">}</span><span class="sb">/`</span><span class="p">));</span>
+<span class="p">})</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -78,18 +82,8 @@ with the special characters that Tailwind uses.</p>
       <p>Task: <code>purgecss</code> - remove all unused CSS selectors. </p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre><span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">&#39;purgecss&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="nx">whitelist</span> <span class="o">=</span> <span class="p">[];</span>
-  <span class="kr">const</span> <span class="nx">whitelistPatterns</span> <span class="o">=</span> <span class="p">[</span><span class="sr">/^js/</span><span class="p">];</span>
-
-  <span class="k">return</span> <span class="nx">gulp</span>
-      <span class="p">.</span><span class="nx">src</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">sourceDir</span><span class="si">}</span><span class="sb">/**/*.css`</span><span class="p">)</span>
-      <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">purgecss</span><span class="p">({</span>
-          <span class="nx">content</span><span class="o">:</span> <span class="p">[</span><span class="sb">`</span><span class="si">${</span><span class="nx">sourceDir</span><span class="si">}</span><span class="sb">/**/*.html`</span><span class="p">],</span>
-          <span class="nx">whitelist</span><span class="o">:</span> <span class="nx">whitelist</span><span class="p">,</span>
-          <span class="nx">whitelistPatterns</span><span class="o">:</span> <span class="nx">whitelistPatterns</span><span class="p">,</span>
-          <span class="nx">extractors</span><span class="o">:</span> <span class="p">[</span>
-            <span class="p">{</span></pre></div>
+      <div class="highlight"><pre><span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">&#39;purgecss&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>  
+  <span class="kr">const</span> <span class="nx">purgecss</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;gulp-purgecss&#39;</span><span class="p">);</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -98,10 +92,10 @@ with the special characters that Tailwind uses.</p>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-5'>#</a>
       </div>
-      <p>TailwindExtractor as defined above. </p>
+      <p>Array of class names to always include. </p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre>              <span class="nx">extractor</span><span class="o">:</span> <span class="nx">TailwindExtractor</span><span class="p">,</span></pre></div>
+      <div class="highlight"><pre>  <span class="kr">const</span> <span class="nx">whitelist</span> <span class="o">=</span> <span class="p">[];</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -110,10 +104,90 @@ with the special characters that Tailwind uses.</p>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-6'>#</a>
       </div>
-      <p>File extensions for which to search for class names. </p>
+      <p>Array of class patterns to always include. </p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre>              <span class="nx">extensions</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="s2">&quot;vue&quot;</span><span class="p">,</span> <span class="s2">&quot;js&quot;</span><span class="p">,</span> <span class="s2">&quot;php&quot;</span><span class="p">]</span>
+      <div class="highlight"><pre>  <span class="kr">const</span> <span class="nx">whitelistPatterns</span> <span class="o">=</span> <span class="p">[</span><span class="sr">/^js/</span><span class="p">,</span> <span class="sr">/^dy/</span><span class="p">];</span>
+
+  <span class="k">return</span> <span class="nx">gulp</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-7'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-7'>#</a>
+      </div>
+      <p>Look for *.ccs files the current or any child directory. </p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>      <span class="p">.</span><span class="nx">src</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">sourceDir</span><span class="si">}</span><span class="sb">/**/*.css`</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-8'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-8'>#</a>
+      </div>
+      <p>Call purgecss. </p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>      <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">purgecss</span><span class="p">({</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-9'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-9'>#</a>
+      </div>
+      <p>Look in files for class names.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>          <span class="nx">content</span><span class="o">:</span> <span class="p">[</span><span class="sb">`</span><span class="si">${</span><span class="nx">sourceDir</span><span class="si">}</span><span class="sb">/**/*.html`</span><span class="p">,</span>
+                    <span class="sb">`</span><span class="si">${</span><span class="nx">sourceDir</span><span class="si">}</span><span class="sb">/**/*.php`</span><span class="p">,</span>                   
+                    <span class="sb">`</span><span class="si">${</span><span class="nx">sourceDir</span><span class="si">}</span><span class="sb">/**/*.vue`</span><span class="p">],</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-10'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-10'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>          <span class="nx">whitelist</span><span class="o">:</span> <span class="nx">whitelist</span><span class="p">,</span>
+          <span class="nx">whitelistPatterns</span><span class="o">:</span> <span class="nx">whitelistPatterns</span><span class="p">,</span>
+          <span class="nx">extractors</span><span class="o">:</span> <span class="p">[</span>
+            <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-11'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-11'>#</a>
+      </div>
+      <p>TailwindExtractor as defined above. </p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>              <span class="nx">extractor</span><span class="o">:</span> <span class="nx">TailwindExtractor</span><span class="p">,</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-12'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-12'>#</a>
+      </div>
+      <p>File extensions for which to search for 
+class names with the extractor. </p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>              <span class="nx">extensions</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;html&#39;</span><span class="p">,</span> <span class="s1">&#39;vue&#39;</span><span class="p">,</span> <span class="s1">&#39;js&#39;</span><span class="p">,</span> <span class="s1">&#39;php&#39;</span><span class="p">]</span>
             <span class="p">},</span>
           <span class="p">],</span>          
        <span class="p">}))</span>
