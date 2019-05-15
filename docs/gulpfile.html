@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>gulpfile.js</title>
+  <link rel="stylesheet" href="pycco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div class='section'>
+    <div class='docs'><h1>gulpfile.js</h1></div>
+  </div>
+  <div class='clearall'>
+  <div class='section' id='section-0'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-0'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">gulp</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;gulp&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">rename</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;gulp-rename&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">purgecss</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;gulp-purgecss&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">concat</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;gulp-concat&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">minifyCSS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;gulp-minify-css&#39;</span><span class="p">);</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-1'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-1'>#</a>
+      </div>
+      <p>Global constants for all tasks to use.  </p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="kr">const</span> <span class="nx">sourceDir</span> <span class="o">=</span> <span class="s1">&#39;src&#39;</span><span class="p">;</span>
+<span class="kr">const</span> <span class="nx">targetDir</span> <span class="o">=</span> <span class="s1">&#39;build&#39;</span><span class="p">;</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-2'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-2'>#</a>
+      </div>
+      <p>~/.local/bin/pycco gulpfile.js</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-3'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-3'>#</a>
+      </div>
+      <p>Tailwind extractor that causes PurgeCSS to include class names
+with the special characters that Tailwind uses.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="kr">class</span> <span class="nx">TailwindExtractor</span> <span class="p">{</span>
+  <span class="kr">static</span> <span class="nx">extract</span><span class="p">(</span><span class="nx">content</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">content</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/[A-z0-9-:\/]+/g</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-4'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-4'>#</a>
+      </div>
+      <p>Task: <code>purgecss</code> - remove all unused CSS selectors. </p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">&#39;purgecss&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">whitelist</span> <span class="o">=</span> <span class="p">[];</span>
+  <span class="kr">const</span> <span class="nx">whitelistPatterns</span> <span class="o">=</span> <span class="p">[</span><span class="sr">/^js/</span><span class="p">];</span>
+
+  <span class="k">return</span> <span class="nx">gulp</span>
+      <span class="p">.</span><span class="nx">src</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">sourceDir</span><span class="si">}</span><span class="sb">/**/*.css`</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">purgecss</span><span class="p">({</span>
+          <span class="nx">content</span><span class="o">:</span> <span class="p">[</span><span class="sb">`</span><span class="si">${</span><span class="nx">sourceDir</span><span class="si">}</span><span class="sb">/**/*.html`</span><span class="p">],</span>
+          <span class="nx">whitelist</span><span class="o">:</span> <span class="nx">whitelist</span><span class="p">,</span>
+          <span class="nx">whitelistPatterns</span><span class="o">:</span> <span class="nx">whitelistPatterns</span><span class="p">,</span>
+          <span class="nx">extractors</span><span class="o">:</span> <span class="p">[</span>
+            <span class="p">{</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-5'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-5'>#</a>
+      </div>
+      <p>TailwindExtractor as defined above. </p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>              <span class="nx">extractor</span><span class="o">:</span> <span class="nx">TailwindExtractor</span><span class="p">,</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-6'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-6'>#</a>
+      </div>
+      <p>File extensions for which to search for class names. </p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>              <span class="nx">extensions</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="s2">&quot;vue&quot;</span><span class="p">,</span> <span class="s2">&quot;js&quot;</span><span class="p">,</span> <span class="s2">&quot;php&quot;</span><span class="p">]</span>
+            <span class="p">},</span>
+          <span class="p">],</span>          
+       <span class="p">}))</span>
+      <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">gulp</span><span class="p">.</span><span class="nx">dest</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">targetDir</span><span class="si">}</span><span class="sb">/`</span><span class="p">));</span>
+<span class="p">});</span>
+
+<span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">&#39;buildcss&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">gulp</span>
+    <span class="p">.</span><span class="nx">src</span><span class="p">(</span><span class="s1">&#39;build/**/*.css&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">concat</span><span class="p">(</span><span class="s1">&#39;main.css&#39;</span><span class="p">))</span>
+    <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">minifyCSS</span><span class="p">())</span>
+    <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">gulp</span><span class="p">.</span><span class="nx">dest</span><span class="p">(</span><span class="s1">&#39;build/public&#39;</span><span class="p">));</span>
+<span class="p">});</span> 
+
+<span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">&#39;css&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">postcss</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;gulp-postcss&#39;</span><span class="p">);</span>
+    <span class="kr">const</span> <span class="nx">tailwindcss</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;tailwindcss&#39;</span><span class="p">);</span>
+  
+    <span class="k">return</span> <span class="nx">gulp</span>
+      <span class="p">.</span><span class="nx">src</span><span class="p">(</span><span class="s1">&#39;style.css&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">postcss</span><span class="p">([</span>
+        <span class="nx">tailwindcss</span><span class="p">(</span><span class="s1">&#39;./tailwind.config.js&#39;</span><span class="p">),</span>
+        <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;autoprefixer&#39;</span><span class="p">),</span>
+      <span class="p">]))</span>
+      <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">rename</span><span class="p">(</span><span class="s1">&#39;tailwind.css&#39;</span><span class="p">))</span>
+      <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">gulp</span><span class="p">.</span><span class="nx">dest</span><span class="p">(</span><span class="s1">&#39;src/&#39;</span><span class="p">));</span>
+<span class="p">});</span>
+
+<span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">&#39;fonts&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">gulp</span>
+        <span class="p">.</span><span class="nx">src</span><span class="p">(</span><span class="s1">&#39;src/fonts/**/*&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">gulp</span><span class="p">.</span><span class="nx">dest</span><span class="p">(</span><span class="s1">&#39;dist&#39;</span><span class="p">))</span>
+<span class="p">});</span>
+  
+<span class="kd">function</span> <span class="nx">watchFiles</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">gulp</span><span class="p">.</span><span class="nx">watch</span><span class="p">([</span><span class="s1">&#39;./style.css&#39;</span><span class="p">,</span> <span class="s1">&#39;./tailwind.config.js&#39;</span><span class="p">],</span> <span class="p">{},</span> <span class="nx">gulp</span><span class="p">.</span><span class="nx">series</span><span class="p">([</span><span class="s1">&#39;css&#39;</span><span class="p">]));</span>
+<span class="p">}</span> 
+
+
+
+<span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="nx">gulp</span><span class="p">.</span><span class="nx">series</span><span class="p">([</span><span class="s1">&#39;css&#39;</span><span class="p">,</span> <span class="nx">watchFiles</span><span class="p">]));</span>  
+
+<span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">&#39;build&#39;</span><span class="p">,</span> <span class="nx">gulp</span><span class="p">.</span><span class="nx">series</span><span class="p">([</span><span class="s1">&#39;purgecss&#39;</span><span class="p">]));</span>
+
+</pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+</div>
+</body>

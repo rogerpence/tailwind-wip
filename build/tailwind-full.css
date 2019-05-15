@@ -1,0 +1,266 @@
+/**
+ * This injects Tailwind's base styles, which is a combination of
+ * Normalize.css and some additional base styles.
+ *
+ * You can see the styles here:
+ * https://github.com/tailwindcss/tailwindcss/blob/master/css/preflight.css
+ *
+ * If using `postcss-import`, use this import instead:
+ *
+ * @import "tailwindcss/preflight";
+ */
+
+@tailwind preflight;
+
+/**
+   * This injects any component classes registered by plugins.
+   *
+   * If using `postcss-import`, use this import instead:
+   *
+   * @import "tailwindcss/components";
+   */
+
+/**
+   Custom elements
+ */
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+/*
+ .btn {
+     @apply bg-blue font-bold py-2 px-4 rounded;
+ }
+ 
+ .btn-primary {
+     @apply bg-blue text-white;
+ }
+ 
+ .btn-primary:hover {
+     @apply bg-blue-dark text-white;
+ }
+ 
+ .anchor-btn {
+     @apply no-underline bg-blue font-bold py-2 px-4 rounded;
+ }
+ 
+ .anchor-btn-primary {
+     @apply bg-blue text-white;
+ }
+ 
+ .anchor-btn-primary:hover {
+     @apply bg-blue-dark text-white;
+ }
+ 
+ .std-input {
+     @apply appearance-none w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight border-grey;
+ }
+ 
+ .std-input:focus {
+     @apply outline-none bg-white border-blue;
+ }
+ 
+*/
+
+/**
+   End of custom elements
+ */
+
+/**
+   * Here you would add any of your custom component classes; stuff that you'd
+   * want loaded *before* the utilities so that the utilities could still
+   * override them.
+   *
+   * Example:
+   *
+   * .btn { ... }
+   * .form-input { ... }
+   *
+   * Or if using a preprocessor or `postcss-import`:
+   *
+   * @import "components/buttons";
+   * @import "components/forms";
+   */
+
+/**
+   * This injects all of Tailwind's utility classes, generated based on your
+   * config file.
+   *
+   * If using `postcss-import`, use this import instead:
+   *
+   * @import "tailwindcss/utilities";
+   */
+
+.bg-white{
+  background-color: #fff;
+}
+
+.bg-green-300{
+  background-color: #9ae6b4;
+}
+
+.hover\:bg-purple-500:hover{
+  background-color: #9f7aea;
+}
+
+.border-purple-500{
+  border-color: #9f7aea;
+}
+
+.rounded-lg{
+  border-radius: .5rem;
+}
+
+.rounded-full{
+  border-radius: 9999px;
+}
+
+.border{
+  border-width: 1px;
+}
+
+.block{
+  display: block;
+}
+
+.font-semibold{
+  font-weight: 600;
+}
+
+.h-16{
+  height: 4rem;
+}
+
+.leading-tight{
+  line-height: 1.25;
+}
+
+.leading-normal{
+  line-height: 1.5;
+}
+
+.mx-auto{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mb-4{
+  margin-bottom: 1rem;
+}
+
+.max-w-sm{
+  max-width: 24rem;
+}
+
+.overflow-hidden{
+  overflow: hidden;
+}
+
+.py-1{
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.py-4{
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.px-4{
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.px-6{
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.shadow-lg{
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, .1), 0 4px 6px -2px rgba(0, 0, 0, .05);
+}
+
+.text-center{
+  text-align: center;
+}
+
+.text-gray-600{
+  color: #718096;
+}
+
+.text-gray-700{
+  color: #4a5568;
+}
+
+.text-purple-500{
+  color: #9f7aea;
+}
+
+.hover\:text-white:hover{
+  color: #fff;
+}
+
+.text-xs{
+  font-size: .75rem;
+}
+
+.text-sm{
+  font-size: .875rem;
+}
+
+.text-xl{
+  font-size: 1.25rem;
+}
+
+/**
+   * Here you would add any custom utilities you need that don't come out of the
+   * box with Tailwind.
+   *
+   * Example :
+   *
+   * .bg-pattern-graph-paper { ... }
+   * .skew-45 { ... }
+   *
+   * Or if using a preprocessor or `postcss-import`:
+   *
+   * @import "utilities/background-patterns";
+   * @import "utilities/skew-transforms";
+   */
+
+@media (min-width: 640px){
+
+  .sm\:flex{
+    display: flex;
+  }
+
+  .sm\:items-center{
+    align-items: center;
+  }
+
+  .sm\:flex-grow{
+    flex-grow: 1;
+  }
+
+  .sm\:h-24{
+    height: 6rem;
+  }
+
+  .sm\:mb-0{
+    margin-bottom: 0;
+  }
+
+  .sm\:ml-0{
+    margin-left: 0;
+  }
+
+  .sm\:mr-4{
+    margin-right: 1rem;
+  }
+
+  .sm\:text-left{
+    text-align: left;
+  }
+}

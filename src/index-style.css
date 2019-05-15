@@ -1,0 +1,16 @@
+section {
+    width: 100%;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 6fr 1fr  1fr 2fr 2fr 1fr 1fr;
+    grid-template-rows: 1fr 2fr 1fr 2fr 4fr;
+}
+
+.col {
+    border-left: 1px solid red;
+}
+
+.col:last-child {
+    border-right: 1px solid red;
+}
+
